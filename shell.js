@@ -333,7 +333,7 @@
           const { text, applied } = apply(f.text, changes);
           if (!applied.length) return;
           try {
-            await write('recommendations.md', text, f.sha, `rec: 反応を更新（アプリから） ${applied.map(c => c.number + '=' + c.to).join(' ')}`, cfg.main);
+            await write('recommendations.md', text, f.sha, `rec: 反応を更新（アプリから） ${applied.map(c => c.number + '=' + c.to).join(' ')} [skip ci]`, cfg.main);
             return;
           } catch (e) { if (e.code !== 'conflict') throw e; }
         }
