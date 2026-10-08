@@ -93,7 +93,7 @@
     frame(
       h('p', { class: 'lead' }, '本とクイズのデータは、非公開の hondana リポジトリにあります。最初に一度だけ、GitHub のトークンを貼ってください。'),
       h('ol', { class: 'steps' },
-        h('li', null, h('a', { href: TOKEN_URL, target: '_blank', rel: 'noopener' }, 'トークンを作る画面をひらく'), '（名前・期限・Contents の権限は入った状態でひらきます）'),
+        h('li', null, h('a', { class: 'go', href: TOKEN_URL, target: '_blank', rel: 'noopener' }, 'トークンを作る画面をひらく'), '（名前・期限・Contents の権限は入った状態でひらきます）'),
         h('li', null, '「Repository access」で ', h('b', null, 'Only select repositories → hondana'), ' を選んで、いちばん下の「Generate token」'),
         h('li', null, '出てきた ', h('code', null, 'github_pat_…'), ' をコピーして、下に貼る')),
       form,
