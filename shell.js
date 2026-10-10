@@ -202,6 +202,13 @@
       const made = await call(`${base}/git/refs`, { method: 'POST', headers: H({ 'Content-Type': 'application/json' }), body: JSON.stringify({ ref: 'refs/heads/' + branch, sha }) });
       if (!made.ok && made.status !== 422) throw err(made.status === 403 ? 'auth' : 'unavailable', made.status);
     }
+    /* アプリから GitHub Actions を起こす（repository_dispatch）。知識の棚卸しの「依頼を送る」が使う */
+    async function dispatch(eventType, payload) {
+      const res = await call(`${base}/dispatches`, { method: 'POST', headers: H({ 'Content-Type': 'application/json' }), body: JSON.stringify({ event_type: eventType, client_payload: payload || {} }) });
+      if (res.status === 204) return true;
+      if (res.status === 403 || res.status === 404) { authBanner(); throw err('auth', res.status, 'トークンに Contents の書き込み権限がありません'); }
+      throw err('unavailable', res.status, `送れませんでした（${res.status}）`);
+    }
     async function write(path, text, sha, message, branch) {
       const body = JSON.stringify(Object.assign({ message, content: b64e(text), branch }, sha ? { sha } : {}));
       const put = () => call(fileUrl(path), { method: 'PUT', headers: H({ 'Content-Type': 'application/json' }), body });
@@ -285,6 +292,7 @@
       window.HONDANA_GH = {
         read: path => read(path, cfg.data),
         write: (path, text, sha, message) => write(path, text, sha, message + ' [skip ci]', cfg.data),
+        dispatch,
         links: cfg.links,
         onAuthError: authBanner,
         resetToken,
