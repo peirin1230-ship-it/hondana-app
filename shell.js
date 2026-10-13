@@ -4,7 +4,7 @@
 
    流れ：
    1. トークンが無ければ設定の画面を出す
-   2. hondana の site/quiz.html（または site/index.html）を GitHub API で読み、この端末にとっておく
+   2. hondana の site/quiz.html（または site/index.html・site/kotoba.html）を GitHub API で読み、この端末にとっておく
       （次からは、とっておいた版をすぐ出し、裏で新しい版が出ていないかを確かめる）
    3. その HTML に、アイコンなどの頭と「保存の口（bridge）」を足して、この画面に書き出す */
 (() => {
@@ -18,7 +18,7 @@
   const CACHE_PREFIX = new URL('../__data/', location.href).href;
   const TOKEN_URL = 'https://github.com/settings/personal-access-tokens/new?' + new URLSearchParams({
     name: 'hondana-app',
-    description: 'hondana の推薦棚と知識の棚卸し（ホーム画面のアプリ）から読み書きする',
+    description: 'hondana の推薦棚・知識の棚卸し・ことばの在庫（ホーム画面のアプリ）から読み書きする',
     target_name: REPO.owner,
     expires_in: '365',
     contents: 'write',
@@ -97,7 +97,7 @@
         h('li', null, '「Repository access」で ', h('b', null, 'Only select repositories → hondana'), ' を選んで、いちばん下の「Generate token」'),
         h('li', null, '出てきた ', h('code', null, 'github_pat_…'), ' をコピーして、下に貼る')),
       form,
-      h('p', { class: 'note' }, 'トークンはこの端末にだけ保存し、GitHub 以外には送りません。推薦棚と知識の棚卸しで同じトークンを使えます。'));
+      h('p', { class: 'note' }, 'トークンはこの端末にだけ保存し、GitHub 以外には送りません。推薦棚・知識の棚卸し・ことばの在庫で同じトークンを使えます。'));
     setTimeout(() => input.focus(), 50);
   }
 
@@ -287,8 +287,8 @@
     window.addEventListener('load', () => setTimeout(checkUpdate, 2500));
     document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') checkUpdate(); });
 
-    if (cfg.app === 'quiz') {
-      /* 知識の棚卸し：記録は app-data ブランチの quiz/state.json */
+    if (cfg.app === 'quiz' || cfg.app === 'kotoba') {
+      /* 知識の棚卸し：記録は app-data ブランチの quiz/state.json。ことばの在庫：kotoba/state.json と kotoba/memos/YYYY-MM.json。同じ口を使う */
       window.HONDANA_GH = {
         read: path => read(path, cfg.data),
         write: (path, text, sha, message) => write(path, text, sha, message + ' [skip ci]', cfg.data),

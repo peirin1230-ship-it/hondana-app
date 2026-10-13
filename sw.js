@@ -1,10 +1,11 @@
 /* 入れ物のファイルを手元に置いておき、電波がないときでもアプリをひらけるようにする。
    つながるときは、いつも新しいほうを使う。本のデータ（hondana から読んだ HTML）は shell.js が別に持つ。 */
-const CACHE = 'hondana-app-shell-v1';
+const CACHE = 'hondana-app-shell-v2';
 const FILES = [
   './', './index.html', './shell.js', './shell.css',
   './quiz/', './quiz/index.html', './quiz/manifest.webmanifest', './quiz/icon-180.png', './quiz/icon-192.png', './quiz/icon.svg',
   './shelf/', './shelf/index.html', './shelf/manifest.webmanifest', './shelf/icon-180.png', './shelf/icon-192.png', './shelf/icon.svg',
+  './kotoba/', './kotoba/index.html', './kotoba/manifest.webmanifest', './kotoba/icon-180.png', './kotoba/icon-192.png', './kotoba/icon.svg',
 ];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
