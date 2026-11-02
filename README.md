@@ -16,6 +16,7 @@ hondana の **推薦棚**・**知識の棚卸し**・**ことばの在庫** を�
 | クイズの画面とカード | `hondana` の `site/quiz.html`（`scripts/build_quiz.py` が作る） |
 | 推薦棚の画面 | `hondana` の `site/index.html`（`scripts/build_site.py` と表紙の Actions が作る） |
 | クイズの記録（間隔・正解・メモ・深掘りの依頼） | `hondana` の **`app-data` ブランチ** の `quiz/state.json` |
+| クイズにしてほしいと貼り付けた文章 | `hondana` の **`app-data` ブランチ** の `quiz/pastes/<id>.json` |
 | 推薦棚で押した反応 | `hondana` の `main` の `recommendations.md`（「**反応**」の行を書き換える） |
 | ことばの在庫の画面と問い・壁打ち | `hondana` の `site/kotoba.html`（`scripts/build_kotoba.py` が作る） |
 | ことばの在庫のメモと記録 | `hondana` の **`app-data` ブランチ** の `kotoba/memos/YYYY-MM.json` と `kotoba/state.json` |
